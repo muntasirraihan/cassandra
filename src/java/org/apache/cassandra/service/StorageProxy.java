@@ -33,6 +33,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.*;
 import com.google.common.util.concurrent.Uninterruptibles;
 import org.apache.commons.lang.StringUtils;
+import org.mortbay.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,6 @@ import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.Schema;
 import org.apache.cassandra.cql3.ColumnNameBuilder;
 import org.apache.cassandra.db.*;
-import org.apache.cassandra.db.Keyspace;
 import org.apache.cassandra.db.filter.NamesQueryFilter;
 import org.apache.cassandra.db.filter.SliceQueryFilter;
 import org.apache.cassandra.db.marshal.UUIDType;
@@ -1181,7 +1181,16 @@ public class StorageProxy implements StorageProxyMBean
 
             if (!commandsToRetry.isEmpty())
                 Tracing.trace("Retrying {} commands", commandsToRetry.size());
-
+            // Muntasir: Do a sleep here for t milliseconds, t will be a parameter exposed in cassandra yaml later
+            // 
+            Log.debug("MUNTASIR: SLEEPING FOR 1ms");
+            try {
+            	Thread.sleep(1000); //sleep for 1 ms
+            }
+            catch(Exception e) {
+            	System.out.println(e);
+            }
+            
             // send out read requests
             for (int i = 0; i < commands.size(); i++)
             {

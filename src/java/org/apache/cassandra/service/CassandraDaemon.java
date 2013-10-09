@@ -95,6 +95,9 @@ public class CassandraDaemon
         String javaVersion = System.getProperty("java.version");
         String javaVmName = System.getProperty("java.vm.name");
         logger.info("JVM vendor/version: {}/{}", javaVmName, javaVersion);
+        // just check whether Muntasir's changes are visible
+        logger.info("MUNATSIR TRYING TO IMPROVE CASSANDRA....");
+	sleep(1000);
         if (javaVmName.contains("OpenJDK"))
         {
             // There is essentially no QA done on OpenJDK builds, and
